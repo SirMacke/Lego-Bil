@@ -18,7 +18,7 @@ const error = require('../middleware/error');
 module.exports = function(app) {
   if (process.env.NODE_ENV == 'production') {
     app.use(express.static('client/dist'));
-    app.use(enforce.HTTPS({ trustProtoHeader: true }));
+    //app.use(enforce.HTTPS({ trustProtoHeader: true }));
   }
 
   app.use(cors());
