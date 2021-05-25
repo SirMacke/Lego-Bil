@@ -37,11 +37,10 @@ export default {
 
       await store.dispatch('User/setUser', response.data);
 
+      console.log('done');
       document.cookie = `auth=${response.data.auth}`
 
-      if (response.isAdmin) router.push('/stock');
-      else router.push ('/')
-      console.log('done');
+      if (response.isAdmin) router.push('/');
 
       //state.user = computed(() => storeData.state.User.user);
       //console.log(state.user);

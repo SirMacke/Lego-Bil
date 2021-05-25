@@ -1,3 +1,5 @@
+const { Socket } = require('dgram');
+const socket = require('../server/api/socket/socket');
 const express = require('express');
 var app = express();
 
@@ -10,7 +12,7 @@ let io = require('socket.io')(http, {
   }
 });
 
-module.exports.io = io;
+socket.estConnection(io);
 
 require('./startup/routes.js')(app);
 require('./startup/db.js')();

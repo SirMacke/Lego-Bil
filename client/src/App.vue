@@ -6,19 +6,14 @@
 <script>
 import { useStore } from 'vuex';
 import { computed } from 'vue';
-import navBar from '@/components/navbar';
 
 export default {
   name: 'App',
-  components: {
-    navBar
-  },
   setup() {
     const store = useStore();
     const user = computed(() => store.state.User.user);
 
     return {
-      state,
       user
     }
   }
