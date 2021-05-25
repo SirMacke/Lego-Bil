@@ -8,6 +8,7 @@ exports.estConnection = function(io) {
 
     socket.on("clientData", (e) => {
       console.log(e);
+      io.emit('bilData', e);
     });
   });
 }
