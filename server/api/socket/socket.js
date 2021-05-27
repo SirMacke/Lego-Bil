@@ -1,5 +1,5 @@
 exports.estConnection = function(io) {
-  io.of("/").on("connection", (socket) => {
+  io.of("/api/socket/bil").on("connection", (socket) => {
     console.log("socket.io: User connected: ", socket.id);
 
     socket.on("disconnect", () => {
