@@ -24,9 +24,9 @@ require('./startup/prod.js')(app);
 var port = process.env.PORT || 3000;
 const server = http.listen(port, () => console.log('info', `Listening on port ${port}...`));
 
-(async () => {
+/*(async () => {
   let ip = await axios.get('https://httpbin.org/ip');
   console.log(ip.data);
-})();
+})();*/
 
 exports.server = server;
