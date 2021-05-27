@@ -36,10 +36,10 @@ export default {
 
     if (process.env.NODE_ENV == 'production') {
       // For production
-      state.socket = io('/api/socket/bil', { transport: ["websocket"] });
+      state.socket = io('', { transport: ["websocket"] });
     } else {
       // For development
-      state.socket = io('http://localhost:5000/api/socket/bil', { transport: ["websocket"] });
+      state.socket = io('http://localhost:5000', { transport: ["websocket"] });
     }
 
     setInterval(() => {
