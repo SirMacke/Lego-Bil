@@ -1,10 +1,10 @@
 <template>
   <main>
     <div>
-      <input v-model="state.direction" type="range" id="steering" name="steering" min="-100" max="">
+      <input v-model="state.direction" type="range" id="steering" name="steering" min="-100" max="100">
     </div>
     <div>
-      <input v-model="state.speed" type="range" id="motor" name="motor" min="-100" max="">
+      <input v-model="state.speed" type="range" id="motor" name="motor" min="-100" max="100">
     </div>
   </main>
   <button @click="mqttConnect">Connect</button>
