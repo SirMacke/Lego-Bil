@@ -9,11 +9,11 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home/*,
+    component: Home,
     meta: {
       requiresAuth: true,
       requiresAdmin: true
-    }*/
+    }
   },
   {
     path: '/login',
