@@ -1,7 +1,7 @@
 <template>
   <main>
     <div>
-      <input v-model="state.direction" type="range" id="direction" name="direction" min="100" max="-100">
+      <input v-model="state.direction" type="range" id="direction" name="direction" min="-100" max="100">
     </div>
     <div>
       <input v-model="state.speed" type="range" id="speed" name="speed" min="-100" max="100">
