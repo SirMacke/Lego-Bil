@@ -1,12 +1,13 @@
 <template>
   <main>
     <div>
-      <input v-model="state.steering" type="range" id="steering" name="steering" min="-100" max="">
+      <input v-model="state.direction" type="range" id="steering" name="steering" min="-100" max="">
     </div>
     <div>
-      <input v-model="state.drive" type="range" id="motor" name="motor" min="-100" max="">
+      <input v-model="state.speed" type="range" id="motor" name="motor" min="-100" max="">
     </div>
   </main>
+  <button @click="mqttConnect">Connect</button>
   <div id="login-signup">
     <a class="link" @click="changePage('login')">Login</a>
     <a>/</a>
@@ -16,39 +17,38 @@
 
 <script>
 import { reactive } from 'vue';
-//import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
-import { io } from 'socket.io-client';
+import mqtt from '../api/mqtt'
 
 export default {
   setup() {
-    //const storeData = useStore();
-    const router = useRouter();
-
     const state = reactive({
-      steering: "0",
-      drive: "0",
+      user: {
+        id: '123',
+        adress: "maximilian.helmersson@abbindustrigymnasium.se"
+      },
+      direction: 0,
+      speed: 0
     });
 
-    function changePage(page) {
-      router.push(`/${page}`);
+    const mqttConnect = () => {
+      mqtt.launch(state.user.id, (topic, source) => {
+        console.log("message:", source, 'on topic:', topic);
+      });
+      //mqtt.subscribe({ 'ping': 1 });
+      setInterval(() => {
+        mqtt.publish(state.user.adress + "/bot", [state.speed, state.direction]);
+      }, 1000);     
     }
+    mqttConnect();
 
-    if (process.env.NODE_ENV == 'production') {
-      // For production
-      state.socket = io('/', { transport: ["websocket"] });
-    } else {
-      // For development
-      state.socket = io('http://localhost:5000/', { transport: ["websocket"] });
+    const mqttDisconnect = () => {
+      mqtt.end()
     }
-
-    setInterval(() => {
-      state.socket.emit('clientData', { steering: state.steering, drive: state.drive});
-    }, 1000);
 
     return {
       state,
-      changePage
+      mqttConnect,
+      mqttDisconnect
     }
   }
 }
