@@ -1,10 +1,10 @@
 <template>
   <main>
     <div>
-      <input v-model="state.direction" type="range" id="steering" name="steering" min="-100" max="100">
+      <input v-model="state.direction" type="range" id="direction" name="direction" min="100" max="-100">
     </div>
     <div>
-      <input v-model="state.speed" type="range" id="motor" name="motor" min="-100" max="100">
+      <input v-model="state.speed" type="range" id="speed" name="speed" min="-100" max="100">
     </div>
   </main>
   <button @click="mqttConnect">Connect</button>
@@ -57,6 +57,43 @@ export default {
 
 <style lang="sass" scoped>
 main
+  display: flex
+
+  @media screen and (max-width: 800px)
+    flex-direction: column
+
+  div
+    width: 50vw
+    height: 100vh
+    position: relative
+
+    @media screen and (max-width: 800px)
+      width: 100vw
+      height: 50vh
+
+    #direction
+      position: absolute
+      width: 70%
+      left: 50%
+      top: 50%
+      transform: translate(-50%, -50%)
+
+      @media screen and (max-width: 800px)
+        transform: rotateZ(-90deg)
+        left: 15%
+
+    #speed
+      position: absolute
+      width: 70%
+      left: 25%
+      top: 50%
+      transform: rotateZ(-90deg)
+
+      @media screen and (max-width: 800px)
+        left: 50%
+        transform: rotateZ(0deg)
+        transform: translate(-50%, -50%)
+
 
 
 #login-signup
