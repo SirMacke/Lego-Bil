@@ -7,7 +7,6 @@
       <input v-model="state.speed" type="range" id="speed" name="speed" min="-100" max="100">
     </div>
   </main>
-  <button @click="mqttConnect">Connect</button>
   <div id="login-signup">
     <a class="link" @click="changePage('login')">Login</a>
     <a>/</a>
@@ -58,6 +57,7 @@ export default {
 <style lang="sass" scoped>
 main
   display: flex
+  overflow: hidden
 
   @media screen and (max-width: 800px)
     flex-direction: column
