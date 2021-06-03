@@ -73,8 +73,8 @@ export default {
       //mqtt.subscribe({ 'ping': 1 });
       setInterval(() => {
         mqtt.publish(state.user.adress + "/speed", parseInt(state.speed));
-        mqtt.publish(state.user.adress + "/direction", parseInt(value));
-      }, 1000);     
+        mqtt.publish(state.user.adress + "/direction", parseInt(state.direction));
+      }, 1000);
     }
     mqttConnect();
 
