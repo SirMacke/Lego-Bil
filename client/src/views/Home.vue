@@ -61,8 +61,8 @@ export default {
     }
 
     setInterval(() => {
-      if (state.arrowUp && state.speed <= 100) state.speed++;
-      if (state.arrowDown && state.speed >= -100) state.speed--;
+      if (state.arrowUp && state.speed < 100) state.speed++;
+      if (state.arrowDown && state.speed > -100) state.speed--;
     }, 10);
 
     const mqttConnect = () => {
