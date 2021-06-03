@@ -32,6 +32,7 @@ export default {
         adress: "maximilian.helmersson@abbindustrigymnasium.se"
       },
       speed: 0,
+      direction: 0,
       arrowUp: false,
       arrowDown: false
     });
@@ -72,13 +73,13 @@ export default {
       //mqtt.subscribe({ 'ping': 1 });
       setInterval(() => {
         mqtt.publish(state.user.adress + "/speed", parseInt(state.speed));
+        mqtt.publish(state.user.adress + "/direction", parseInt(value));
       }, 1000);     
     }
     mqttConnect();
 
     function changeDirection(value) {
-      console.log(value)
-      mqtt.publish(state.user.adress + "/direction", parseInt(value));
+      state.direction += value;
     }
 
     const mqttDisconnect = () => {
