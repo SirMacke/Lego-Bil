@@ -82,7 +82,7 @@ main
       font-size: 3em
       margin: 50px 0px 0px 0px
       text-transform: uppercase
-      color: #1892FF
+      color: #04AA6D
 
     #line
       position: relative
@@ -131,7 +131,7 @@ main
       font-family: Lato
       font-size: 1.4em
       background: none
-      border: 2px solid #1892FF
+      border: 2px solid #04AA6D
       margin-top: 25px
 
       @media (max-width: 400px)
@@ -143,20 +143,20 @@ main
         animation-name: formButton
         -webkit-animation-duration: .5s
         animation-duration: .5s
-        background: #1892FF
+        background: #04AA6D
         color: white
 
       @-webkit-keyframes formButton
         0%
           background: none
         100%
-          background: #1892FF
+          background: #04AA6D
 
       @keyframes formButton
         0%
           background: none
         100%
-          background: #1892FF
+          background: #04AA6D
 
   .bottom-link
     a

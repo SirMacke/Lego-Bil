@@ -2,11 +2,8 @@
   <main>
     <h1>DriverBot</h1>
     <div id="container">
-      <div>
-        <div id="direction">
-          <button @click="changeDirection(20)">Left</button>
-          <button @click="changeDirection(-20)">Right</button>
-        </div>
+      <div class="slidecontainer">
+        <input v-model="state.direction" type="range" class="slider" id="direction" name="direction" min="0" max="90">
       </div>
       <div class="slidecontainer">
         <input v-model="state.speed" type="range" class="slider" id="speed" name="speed" min="-100" max="100">
@@ -33,6 +30,8 @@ export default {
       },
       speed: 0,
       direction: 0,
+      arrowRight: false,
+      arrowLeft: false,
       arrowUp: false,
       arrowDown: false
     });
@@ -47,10 +46,10 @@ export default {
     function keyUpdate (key, keyDown) {
       switch (key) {
         case "d":
-          if (!keyDown) changeDirection(-20);
+          state.arrowRight = keyDown;
           break;
         case "a":
-          if (!keyDown) changeDirection(20);
+          state.arrowLeft = keyDown;
           break;
         case "w":
           state.arrowUp = keyDown;
@@ -62,9 +61,11 @@ export default {
     }
 
     setInterval(() => {
-      if (state.arrowUp && state.speed < 100) state.speed++;
-      if (state.arrowDown && state.speed > -100) state.speed--;
-    }, 10);
+      if (state.arrowUp && state.speed < 100) state.speed += 2;
+      if (state.arrowDown && state.speed > -100) state.speed -= 2;
+      if (state.arrowLeft && state.direction < 90) state.direction += 2;
+      if (state.arrowRight && state.direction > 0) state.direction -= 2;
+    }, 20);
 
     const mqttConnect = () => {
       mqtt.launch(state.user.id, (topic, source) => {
@@ -73,24 +74,20 @@ export default {
       //mqtt.subscribe({ 'ping': 1 });
       setInterval(() => {
         mqtt.publish(state.user.adress + "/speed", parseInt(state.speed));
+        console.log(`Speed: ${state.speed}`);
         mqtt.publish(state.user.adress + "/direction", parseInt(state.direction));
-      }, 1000);
+        console.log(`Direction: ${-state.direction + 45}`);
+      }, 100);
     }
     mqttConnect();
 
-    function changeDirection(value) {
-      state.direction += value;
-    }
-
-    const mqttDisconnect = () => {
+    /*const mqttDisconnect = () => {
       mqtt.end()
-    }
+    }*/
 
     return {
       state,
-      mqttConnect,
-      mqttDisconnect,
-      changeDirection
+      mqttConnect
     }
   }
 }
@@ -98,19 +95,26 @@ export default {
 
 <style lang="sass" scoped>
 main
-  overflow: hidden
-
-  @media screen and (max-width: 800px)
-    flex-direction: column
+  overflow: hidden  
 
   h1
     position: absolute
     left: 50%
     transform: translateX(-50%)
     top: 25px
+    text-align: center
+    margin: 0px
+
+    @media screen and (max-width: 800px)
+      top: 50%
+      right: -200px
+      transform: rotateZ(90deg) translateX(0%)
 
   #container
     display: flex
+
+    @media screen and (max-width: 800px)
+      flex-direction: column
 
     div
       width: 50vw
@@ -121,34 +125,10 @@ main
         width: 100vw
         height: 50vh
 
-      #direction
-        display: flex
-        position: absolute
-        left: 50%
-        top: 50%
-        transform: translate(-50%, -50%)
-        width: auto
-        height: auto
-
-      button
-        height: 60px
-        width: 100px
-        margin: 20px
-        border: none
-        border-radius: 5px
-        background: #d3d3d3
-        transition: opacity .2s
-        -webkit-transition: .2s 
-        font-size: 0.9em
-
-      button:hover
-        background: #04AA6D
-        cursor: pointer
-
     .slidecontainer
 
       /* The slider itself */
-      #speed
+      .slider
         -webkit-appearance: none  /* Override default CSS styles */
         appearance: none
         width: 100% /* Full-width */
@@ -170,11 +150,11 @@ main
           transform: translate(-50%, -50%)
 
       /* Mouse-over effects */
-      #speed:hover
+      .slider:hover
         opacity: 1 /* Fully shown on mouse-over */
 
       /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-      #speed::-webkit-slider-thumb
+      .slider::-webkit-slider-thumb
         -webkit-appearance: none /* Override default look */
         appearance: none
         width: 25px /* Set a specific slider handle width */
@@ -182,11 +162,19 @@ main
         background: #04AA6D /* Green background */
         cursor: pointer /* Cursor on hover */
 
-      #speed::-moz-range-thumb
+      .slider::-moz-range-thumb
         width: 25px /* Set a specific slider handle width */
         height: 25px /* Slider handle height */
         background: #04AA6D /* Green background */
         cursor: pointer /* Cursor on hover */
+
+      #direction
+        transform: rotateZ(180deg)
+
+        @media screen and (max-width: 800px)
+          left: 50%
+          transform: translateX(-50%) rotateZ(90deg)
+          width: 40%
 
 
 #login-signup
