@@ -23,7 +23,7 @@ import mqtt from '../api/mqtt'
 
 export default {
   setup() {
-    const state = reactive({
+    const state = reactive({ // Variabler
       user: {
         id: '123',
         adress: "maximilian.helmersson@abbindustrigymnasium.se"
@@ -36,6 +36,7 @@ export default {
       arrowDown: false
     });
 
+    // Event listener som kollar om tangenter trycks på
     document.addEventListener("keydown", event => {
       keyUpdate(event.key, true)
     });
@@ -43,6 +44,7 @@ export default {
       keyUpdate(event.key, false)
     });
 
+    // Uppdaterar tangentvariabler
     function keyUpdate (key, keyDown) {
       switch (key) {
         case "d":
@@ -60,6 +62,7 @@ export default {
       }
     }
 
+    // Ändrar speed och direction om tangenter är nedtryckta
     setInterval(() => {
       if (state.arrowUp && state.speed < 100) state.speed += 2;
       if (state.arrowDown && state.speed > -100) state.speed -= 2;
@@ -67,11 +70,13 @@ export default {
       if (state.arrowRight && state.direction > 0) state.direction -= 2;
     }, 20);
 
+    // Connectar till maqiatto via mqtt.js filen under api foldern
     const mqttConnect = () => {
       mqtt.launch(state.user.id, (topic, source) => {
         console.log("message:", source, 'on topic:', topic);
       });
-      //mqtt.subscribe({ 'ping': 1 });
+      
+      // Skickar data till driverbot
       setInterval(() => {
         mqtt.publish(state.user.adress + "/speed", parseInt(state.speed));
         console.log(`Speed: ${state.speed}`);
@@ -80,10 +85,6 @@ export default {
       }, 100);
     }
     mqttConnect();
-
-    /*const mqttDisconnect = () => {
-      mqtt.end()
-    }*/
 
     return {
       state,
