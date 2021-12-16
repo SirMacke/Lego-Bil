@@ -15,7 +15,7 @@ export default {
         qos: 2
       }
     };
-    client = mqtt.connect('mqtt://maqiatto.com', options);
+    client = mqtt.connect('wss://maqiatto.com', options);
     client.on('connect', (topic, message) => {
       callback(topic, message);
     })

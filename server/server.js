@@ -21,7 +21,7 @@ require('./startup/config.js')();
 require('./startup/validation.js')();
 require('./startup/prod.js')(app);
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 5000;
 const server = http.listen(port, () => console.log('info', `Listening on port ${port}...`));
 
 /*(async () => {

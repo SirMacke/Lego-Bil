@@ -34,6 +34,7 @@ export default {
 
     async function login() {
       const response = await axios.post('/api/routes/login', { usernameOrEmail: state.usernameOrEmail, password: state.password});
+      //const response = await axios.post('http://localhost:5000/api/routes/login', { usernameOrEmail: state.usernameOrEmail, password: state.password});
 
       await store.dispatch('User/setUser', response.data);
 

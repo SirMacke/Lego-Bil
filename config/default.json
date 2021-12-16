@@ -1,4 +1,4 @@
 {
-  "jwtPrivateKey": "",
-  "db": ""
+  "jwtPrivateKey": "1234",
+  "db": "mongodb+srv://user:eieZtwGANjrCnlx4@cluster0.urdwh.mongodb.net/Cluster0?retryWrites=true&w=majority"
 }
